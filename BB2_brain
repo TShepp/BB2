@@ -1,1 +1,38 @@
+'''
+Object detection and tracking with OpenCV
+  ==> Real Time tracking with Pan-Tilt servos and STepper motors
+  Pan-Tilt based on original trackign object code developed by Adrian Rosebrock
+  Visit original post: https://www.pyimagesearch.com/2016/05/09/opencv-rpi-gpio-and-gpio-zero-on-the-raspberry-pi/
+  Stepper motor based on Adafruit code developed by Simon Monk
+  Visit original post: https://learn.adafruit.com/adafruit-raspberry-pi-lesson-10-stepper-motors/overview
+Developed by Tyler Schoeppner - tyler.schoeppner@gmail.com @ 7_Oct_202
+'''
 
+# import the necessary packages
+from __future__ import print_function
+from imutils.video import VideoStream
+import argparse
+import imutils
+import time
+import cv2
+import os
+import RPi.GPIO as GPIO
+os.system('sudo pigpoid')
+import pigpio
+import board
+import busio as io
+import adafruit_ht16k33.matrix
+from test_LEDmatrix import ledsoff, neutralexp, surpriseexp, joyexp, angerexp, tiredexp
+
+# setup for LED matrix
+i2c = io.I2C(board.SCL, board.SDA)
+matrix = adafruit_ht16k33.matrix.Matrix16x8(i2c)
+
+# define Servos GPIOs
+tiltServo = 17
+
+# turn on movement for the camera servo
+pi = pigpio.pi()
+
+# setup wheel servo motors
+GPIO.setmode(GPIO.BCM)
